@@ -194,6 +194,13 @@ bool DeviceAudioRt::soundActive(uint64_t uniqueHandle) {
     return ma_sound[sound].isPlaying;
 }
 
+double DeviceAudioRt::soundPos(uint64_t uniqueHandle) {
+    unsigned int sound = UH_UNPACK_PAYLOAD(uniqueHandle);
+    if((sound >= m_nSound) || ma_sound[sound].uniqueId != UH_UNPACK_UNIQUE_ID(uniqueHandle) || !ma_sound[sound].isPlaying) return -1;
+    unsigned int sampleRate = ma_sound[sound].sample->sampleRate();
+    return (double) ma_sound[sound].dpos / (double) sampleRate;
+}
+
 int DeviceAudioRt::mixOutputFloat(signed short *outputBuffer, unsigned int nFrames) {
     for(unsigned int j=0; j<nFrames; ++j) {
         float left=0.0f;
@@ -201,7 +208,7 @@ int DeviceAudioRt::mixOutputFloat(signed short *outputBuffer, unsigned int nFram
         for (unsigned int i=0; i<m_nSound; ++i ) if(ma_sound[i].isPlaying && !ma_sound[i].isPaused) {
             unsigned int nChannels = ma_sound[i].sample->channels();
             if((ma_sound[i].pitch==1.0f)&&!ma_sound[i].disparity) { // use optimized default mixing:
-                printf("// use optimized default mixing: %d %f %f\n", nChannels, ma_sound[i].pitch, ma_sound[i].disparity);
+                // printf("// use optimized default mixing: %d %f %f\n", nChannels, ma_sound[i].pitch, ma_sound[i].disparity);
                 unsigned int currPos=ma_sound[i].dpos+j;
                 if(ma_sound[i].isLoop) currPos%=ma_sound[i].dlen;
                 else if(currPos >= ma_sound[i].dlen) continue;
@@ -212,7 +219,7 @@ int DeviceAudioRt::mixOutputFloat(signed short *outputBuffer, unsigned int nFram
                 right+= dataR * m_volR*ma_sound[i].volR;
             }
             else { // use nearest sample and disparity:
-                printf("// use nearest sample and disparity: %d %f %f\n", nChannels, ma_sound[i].pitch, ma_sound[i].disparity);
+                // printf("// use nearest sample and disparity: %d %f %f\n", nChannels, ma_sound[i].pitch, ma_sound[i].disparity);
                 double fract=ma_sound[i].dpos+j*ma_sound[i].pitch;
                 unsigned int currPos=(unsigned int)fract;
                 fract = fmod(fract,1.0);

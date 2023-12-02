@@ -189,6 +189,8 @@ public:
     /// check if a specified sound is active
     virtual bool soundActive(uint64_t sound)=0;
 
+    virtual double soundPos(uint64_t sound)=0;
+
 protected:
     /// constructor
     DeviceAudio();

@@ -86,6 +86,8 @@ public:
     virtual unsigned int soundActive() const;
     /// check if a specified sound is active
     virtual bool soundActive(uint64_t sound);
+
+    virtual double soundPos(uint64_t sound);
 protected:
     /// constructor. Use the create() method instead
     DeviceAudioSdl(unsigned int nTracks, unsigned int frequency, unsigned int chunkSize);

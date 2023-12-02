@@ -26,6 +26,7 @@ sound_t soundLoopOn(unsigned int track, sample_t sample, float volumeL, float vo
 int soundUpdate(sound_t sound, int pause, float volumeL, float volumeR, float disparity, float pitch);
 int soundStop(sound_t sound);
 int soundActive(sound_t sound);
+double soundPos(sound_t sound);
 #ifdef __cplusplus
 }
 #endif

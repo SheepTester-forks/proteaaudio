@@ -52,7 +52,8 @@ module Sound.ProteaAudio (
     soundPlayOn,
     soundUpdate,
     soundStop,
-    soundActive
+    soundActive,
+    soundPos
  ) where
 
 import Foreign
@@ -243,3 +244,5 @@ sampleFromMemory bs volume
 
 -- | Checks if a specified sound is still active.
 {#fun soundActive{fromSound `Sound'} -> `Bool'#}
+
+{#fun soundPos{fromSound `Sound'} -> `Double'#}

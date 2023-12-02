@@ -231,3 +231,9 @@ int soundActive(sound_t sound) {
     if((&audio) == 0) return 0;
     return audio.soundActive(sound);
 }
+
+double soundPos(sound_t sound) {
+    DeviceAudio & audio = DeviceAudio::singleton();
+    if((&audio) == 0) return 0;
+    return audio.soundPos(sound);
+}
