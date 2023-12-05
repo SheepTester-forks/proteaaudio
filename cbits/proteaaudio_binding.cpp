@@ -47,7 +47,7 @@ static AudioSample* loadWavFromMemory(unsigned char * ptr, size_t len) {
   fp->size = len;
   fp->pos = 0;
   AudioSample * pSample = AudioSample::readWav((FILE*)fp, mem_fread);
-  printf("loadWavFromMemory - channels: %d\n",pSample->channels());
+//   printf("loadWavFromMemory - channels: %d\n",pSample->channels());
   delete fp;
   return pSample;
 }
@@ -69,7 +69,7 @@ static AudioSample* loadMp3FromMemory(unsigned char * file_data_ptr, size_t file
   memcpy(data, info.buffer, size);
   free(info.buffer);
   AudioSample * pSample =  new AudioSample(data, size, info.channels, info.hz, 16);
-  printf("loadMp3FromMemory - channels: %d\n",pSample->channels());
+//   printf("loadMp3FromMemory - channels: %d\n",pSample->channels());
   return pSample;
 }
 
@@ -198,20 +198,20 @@ sound_t soundLoop(sample_t sample, float volumeL, float volumeR, float disparity
 sound_t soundPlay(sample_t sample, float volumeL, float volumeR, float disparity, float pitch) {
     DeviceAudio & audio = DeviceAudio::singleton();
     if((&audio) == 0) return 0;
-    printf("soundPlay - pitch: %f\n", pitch);
+    // printf("soundPlay - pitch: %f\n", pitch);
     return audio.soundPlay(sample, volumeL, volumeR, disparity, pitch);
 }
 
 sound_t soundLoopOn(unsigned int track, sample_t sample, float volumeL, float volumeR, float disparity, float pitch) {
     DeviceAudio & audio = DeviceAudio::singleton();
     if((&audio) == 0) return 0;
-    return audio.soundLoopOn(track, sample, volumeL, volumeR, disparity, pitch);    
+    return audio.soundLoopOn(track, sample, volumeL, volumeR, disparity, pitch);
 }
 
 sound_t soundPlayOn(unsigned int track, sample_t sample, float volumeL, float volumeR, float disparity, float pitch) {
     DeviceAudio & audio = DeviceAudio::singleton();
     if((&audio) == 0) return 0;
-    return audio.soundPlayOn(track, sample, volumeL, volumeR, disparity, pitch);    
+    return audio.soundPlayOn(track, sample, volumeL, volumeR, disparity, pitch);
 }
 
 int soundUpdate(sound_t sound, int pause, float volumeL, float volumeR, float disparity, float pitch) {
