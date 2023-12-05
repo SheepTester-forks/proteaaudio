@@ -53,7 +53,8 @@ module Sound.ProteaAudio (
     soundUpdate,
     soundStop,
     soundActive,
-    soundPos
+    soundPos,
+    soundPaused
  ) where
 
 import Foreign
@@ -246,3 +247,4 @@ sampleFromMemory bs volume
 {#fun soundActive{fromSound `Sound'} -> `Bool'#}
 
 {#fun soundPos{fromSound `Sound'} -> `Double'#}
+{#fun soundPaused{fromSound `Sound'} -> `Bool'#}

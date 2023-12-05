@@ -237,3 +237,9 @@ double soundPos(sound_t sound) {
     if((&audio) == 0) return 0;
     return audio.soundPos(sound);
 }
+
+int soundPaused(sound_t sound) {
+    DeviceAudio & audio = DeviceAudio::singleton();
+    if((&audio) == 0) return 0;
+    return audio.soundPaused(sound);
+}

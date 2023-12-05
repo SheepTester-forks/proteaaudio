@@ -27,6 +27,7 @@ int soundUpdate(sound_t sound, int pause, float volumeL, float volumeR, float di
 int soundStop(sound_t sound);
 int soundActive(sound_t sound);
 double soundPos(sound_t sound);
+int soundPaused(sound_t sound);
 #ifdef __cplusplus
 }
 #endif

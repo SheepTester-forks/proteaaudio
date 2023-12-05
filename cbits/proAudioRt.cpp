@@ -201,6 +201,12 @@ double DeviceAudioRt::soundPos(uint64_t uniqueHandle) {
     return (double) ma_sound[sound].dpos / (double) sampleRate;
 }
 
+bool DeviceAudioRt::soundPaused(uint64_t uniqueHandle) {
+    unsigned int sound = UH_UNPACK_PAYLOAD(uniqueHandle);
+    if((sound >= m_nSound) || ma_sound[sound].uniqueId != UH_UNPACK_UNIQUE_ID(uniqueHandle) || !ma_sound[sound].isPlaying) return -1;
+    return ma_sound[sound].isPaused;
+}
+
 int DeviceAudioRt::mixOutputFloat(signed short *outputBuffer, unsigned int nFrames) {
     for(unsigned int j=0; j<nFrames; ++j) {
         float left=0.0f;
@@ -263,7 +269,7 @@ int DeviceAudioRt::mixOutputFloat(signed short *outputBuffer, unsigned int nFram
                     float dataR = (float)(*((signed short *)(&ma_sound[i].sample->data()[currPosR])));
                     right += dataR * m_volR*ma_sound[i].volR;
                 }
-                printf("currPosL: %d, currPosR: %d\n", currPosL, currPosR);
+                // printf("currPosL: %d, currPosR: %d\n", currPosL, currPosR);
             }
         }
         // clamp and set output:
